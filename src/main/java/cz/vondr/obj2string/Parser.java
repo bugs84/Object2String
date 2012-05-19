@@ -16,11 +16,12 @@ public class Parser {
     public String parse(Object obj) {
         //TODO while with switch over tokenOrder
         for (Field field : obj.getClass().getDeclaredFields()) {//vs. getFields()
-            builder.field(field.getName(), field.isSynthetic(), field.getModifiers(), field);
+            builder.field(field.getName(), field.getModifiers(), obj, field);
 
         }
         return builder.getResult();
     }
+
 
 
 
