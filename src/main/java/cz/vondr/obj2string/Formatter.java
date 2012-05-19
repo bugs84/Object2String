@@ -102,6 +102,7 @@ public class Formatter {//TODO this will be interface in the end
 
     /** field must be accesible and must be primitive */
     private static String getPrimitiveFieldValue(Object obj, Field field) {
+        //TODO maybe that it can be done in more effective way...
         String typeName = field.getType().getName();
         try {
             if ("byte".equals(typeName)) {
