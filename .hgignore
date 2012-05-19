@@ -1,0 +1,4 @@
+syntax: glob
+.idea
+target
+Obj2String.iml

@@ -1,0 +1,7 @@
+Object2String
+==========================================
+
+Object2String should be small extensible Java utility, for writing object to String.
+This utility should write object recursively! Something like deep write :)
+It's still not ready to use. But if you are intersted, send me email at
+bugsmail(at)seznam.cz and I will inform you about first version.
