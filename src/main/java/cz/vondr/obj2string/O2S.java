@@ -13,7 +13,7 @@ public class O2S {
 
     public String toString(Object object) {
 
-        return new Parser(new TokenOrder(), new ResultBuilder()).parse(object);
+        return new Parser(new TokenOrder(), new Formatter()).parse(object);
 
 
 
