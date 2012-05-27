@@ -1,6 +1,8 @@
 package cz.vondr.obj2string;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class Parser {
 
@@ -24,31 +26,48 @@ public class Parser {
 
                 if (fieldType.isPrimitive()) {
                     formatter.field(field.getName(), field.getModifiers(), obj, field);
-                }
-
-                if (fieldType.isArray()) {
+                } else if (fieldType.isArray()) {
+                    formatter.field(field.getName(), field.getModifiers(), obj, field);
                     Object[] array = (Object[]) field.get(obj);
                     formatter.arrayStart();
                     if (array != null) {
                         for (int i = 0; i < array.length; i++) {
                             Object arrayItem = array[i];
                             formatter.arrayItem(arrayItem);
-                            if (i < array.length - 1){
+                            if (i < array.length - 1) {
                                 formatter.arrayBetweenElements();
                             }
 
                         }
                     }
-
-
                     formatter.arrayEnd();
-                }
+                } else if (obj instanceof Collection) {
+                    Collection objCol = (Collection) obj;
+
+                    formatter.field(field.getName(), field.getModifiers(), objCol, field);
+                    formatter.arrayStart();
+                    if (objCol != null) {
+                        Iterator iterator = objCol.iterator();
+                        while (iterator.hasNext()) {
+                            Object arrayItem = iterator.next();
+                            formatter.arrayItem(arrayItem);
+                            if (iterator.hasNext()) {
+                                formatter.arrayBetweenElements();
+                            }
+
+                        }
+                    }
+                    formatter.arrayEnd();
 
 
-                formatter.field(field.getName(), field.getModifiers(), obj, field);
-                if (!fieldType.isPrimitive()) {
+                } else {
+
+
+                    formatter.field(field.getName(), field.getModifiers(), obj, field);
+
                     Object obj1 = field.get(obj);
                     parse(obj1);
+
                 }
 
             }
