@@ -1,5 +1,6 @@
 package cz.vondr.obj2string;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Iterator;
@@ -42,13 +43,15 @@ public class Parser {
                     formatter.field(field.getName(), field.getModifiers(), obj, field);
                 } else if (fieldType.isArray()) {
                     formatter.field(field.getName(), field.getModifiers(), obj, field);
-                    Object[] array = (Object[]) field.get(obj);
+                    Object arrayObj = field.get(obj);
                     formatter.arrayStart();
-                    if (array != null) {
-                        for (int i = 0; i < array.length; i++) {
-                            Object arrayItem = array[i];
+                    if (arrayObj != null) {
+                        int arrayLength = Array.getLength(arrayObj);
+                        for (int i = 0; i < arrayLength; i++) {
+                            Object arrayItem = Array.get(arrayObj, i);
                             formatter.arrayItem(arrayItem);
-                            if (i < array.length - 1) {
+                            //TODO Should I call parse on array item?
+                            if (i < arrayLength - 1) {
                                 formatter.arrayBetweenElements();
                             }
 
